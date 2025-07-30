@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Field, Note, Cost, Image, Voice, Job, Cultivation_calender, Product
+from .models import Field, Note, Cost, Image, Job, Cultivation_calender, Product
 
 
 class FieldSerializer(serializers.ModelSerializer):
@@ -25,18 +25,18 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         fields = "__all__"
 
-
+'''
 class VoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Voice
         fields = "__all__"
-
+'''
 
 class JobSerializer(serializers.ModelSerializer):
     field = FieldSerializer()
     costs = CostSerializer()
     notes = NoteSerializer()
-    voices = VoiceSerializer()
+    #voices = VoiceSerializer()
     images = ImageSerializer()
 
     class Meta:
