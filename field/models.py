@@ -33,6 +33,8 @@ class Image(models.Model):
     def __str__(self):
         return self.image.name
 
+'''
+# there is no need to add voices.it must change in designs too!!!!
 
 class Voice(models.Model):
     voice = models.FileField(upload_to="audios/", null=True, blank=True)
@@ -43,14 +45,16 @@ class Voice(models.Model):
             return self.voice.name
         else:
             return "null"
-
+'''
 
 class Job(models.Model):
     TYPE_CHOICES = [
-        ("Irrigating", "IRRIGATING"),
+        ("Irrigation", "IRRIGATING"),
         ("Planting", "PLANTING"),
         ("PrePlanting", "PREPLANTING"),
         ("Fertilizing", "FERTILIZING"),
+        #add spraying for poisions bc we added fertilizers so we need it too!
+        ("Spraying", "SPRAYING"),
         ("Pruning", "PRUNING"),
         ("Harvesting", "HARVESTING"),
     ]
@@ -61,7 +65,8 @@ class Job(models.Model):
     status = models.BooleanField()
     costs = models.ForeignKey(Cost, on_delete=models.SET_NULL, null=True, blank=True)
     notes = models.ForeignKey(Note, on_delete=models.SET_NULL, null=True, blank=True)
-    voices = models.ForeignKey(Voice, on_delete=models.SET_NULL, null=True, blank=True)
+    ##########REMOVE THIS MF!
+    #voices = models.ForeignKey(Voice, on_delete=models.SET_NULL, null=True, blank=True)
     images = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
