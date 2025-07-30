@@ -1,8 +1,11 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Field(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     geography = models.JSONField(default=dict)
 
@@ -33,7 +36,8 @@ class Image(models.Model):
     def __str__(self):
         return self.image.name
 
-'''
+
+"""
 # there is no need to add voices.it must change in designs too!!!!
 
 class Voice(models.Model):
@@ -45,15 +49,17 @@ class Voice(models.Model):
             return self.voice.name
         else:
             return "null"
-'''
+"""
+
 
 class Job(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     TYPE_CHOICES = [
         ("Irrigation", "IRRIGATING"),
         ("Planting", "PLANTING"),
         ("PrePlanting", "PREPLANTING"),
         ("Fertilizing", "FERTILIZING"),
-        #add spraying for poisions bc we added fertilizers so we need it too!
+        # add spraying for poisions bc we added fertilizers so we need it too!
         ("Spraying", "SPRAYING"),
         ("Pruning", "PRUNING"),
         ("Harvesting", "HARVESTING"),
@@ -66,7 +72,7 @@ class Job(models.Model):
     costs = models.ForeignKey(Cost, on_delete=models.SET_NULL, null=True, blank=True)
     notes = models.ForeignKey(Note, on_delete=models.SET_NULL, null=True, blank=True)
     ##########REMOVE THIS MF!
-    #voices = models.ForeignKey(Voice, on_delete=models.SET_NULL, null=True, blank=True)
+    # voices = models.ForeignKey(Voice, on_delete=models.SET_NULL, null=True, blank=True)
     images = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
