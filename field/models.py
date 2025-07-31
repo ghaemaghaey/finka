@@ -14,6 +14,7 @@ class Field(models.Model):
 
 
 class Note(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
 
     def __str__(self):
@@ -21,6 +22,7 @@ class Note(models.Model):
 
 
 class Cost(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     amount = models.BigIntegerField(default=0)
 
@@ -29,6 +31,7 @@ class Cost(models.Model):
 
 
 class Image(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to="images/")
     comment = models.TextField(default="")
     uploaded_at = models.DateTimeField(auto_now_add=True)
