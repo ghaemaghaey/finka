@@ -25,19 +25,18 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         fields = "__all__"
 
-'''
-class VoiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Voice
-        fields = "__all__"
-'''
 
 class JobSerializer(serializers.ModelSerializer):
-    field = FieldSerializer()
-    costs = CostSerializer()
-    notes = NoteSerializer()
-    #voices = VoiceSerializer()
-    images = ImageSerializer()
+    field = serializers.PrimaryKeyRelatedField(queryset=Field.objects.all())
+    costs = serializers.PrimaryKeyRelatedField(
+        queryset=Cost.objects.all(), required=False, allow_null=True
+    )
+    notes = serializers.PrimaryKeyRelatedField(
+        queryset=Note.objects.all(), required=False, allow_null=True
+    )
+    images = serializers.PrimaryKeyRelatedField(
+        queryset=Image.objects.all(), required=False, allow_null=True
+    )
 
     class Meta:
         model = Job
