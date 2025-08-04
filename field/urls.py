@@ -10,6 +10,9 @@ from .views import (
     CostDetail,
     FieldListCreate,
     FieldDetail,
+    cultivation_calender,
+    ProductListCreate,
+    ProductDetail,
 )
 
 
@@ -20,13 +23,15 @@ def register_crud_urls(prefix, list_view, detail_view):
     ]
 
 
-urlpatterns = []
-
+urlpatterns = [
+    path("cultivation/", cultivation_calender.as_view(), name="cultivation_calender"),
+]
 urlpatterns += register_crud_urls("jobs", JobListCreate, JobDetail)
 urlpatterns += register_crud_urls("notes", NoteListCreate, NoteDetails)
 urlpatterns += register_crud_urls("images", ImageListCreate, ImageDetail)
 urlpatterns += register_crud_urls("costs", CostListCreate, CostDetail)
 urlpatterns += register_crud_urls("fields", FieldListCreate, FieldDetail)
+urlpatterns += register_crud_urls("products", ProductListCreate, ProductDetail)
 
 
 # urlpatterns = [

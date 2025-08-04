@@ -70,7 +70,7 @@ class Job(models.Model):
     type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="Irrigating")
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
     made_date = models.DateTimeField(auto_now_add=True)
-    due_date = models.DateTimeField()
+    due_date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField()
     costs = models.ForeignKey(Cost, on_delete=models.SET_NULL, null=True, blank=True)
     notes = models.ForeignKey(Note, on_delete=models.SET_NULL, null=True, blank=True)

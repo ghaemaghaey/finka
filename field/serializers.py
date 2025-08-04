@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Field, Note, Cost, Image, Job, Cultivation_calender, Product
 
+from jalali_date import datetime2jalali
+
 
 class FieldSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,22 +23,31 @@ class CostSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    uploaded_at = serializers.SerializerMethodField()
+
     class Meta:
         model = Image
         fields = "__all__"
 
+    def get_uploaded_at(self, obj):
+        return datetime2jalali(obj.uploaded_at).strftime("%Y/%m/%d %H:%M:%S")
+
 
 class JobSerializer(serializers.ModelSerializer):
-    field = serializers.PrimaryKeyRelatedField(queryset=Field.objects.all())
-    costs = serializers.PrimaryKeyRelatedField(
-        queryset=Cost.objects.all(), required=False, allow_null=True
-    )
-    notes = serializers.PrimaryKeyRelatedField(
-        queryset=Note.objects.all(), required=False, allow_null=True
-    )
-    images = serializers.PrimaryKeyRelatedField(
-        queryset=Image.objects.all(), required=False, allow_null=True
-    )
+    # field = serializers.PrimaryKeyRelatedField(queryset=Field.objects.all())
+    field = FieldSerializer(read_only=True)
+    # costs = serializers.PrimaryKeyRelatedField(
+    #     queryset=Cost.objects.all(), required=False, allow_null=True
+    # )
+    costs = CostSerializer(read_only=True, allow_null=True)
+    # notes = serializers.PrimaryKeyRelatedField(
+    #     queryset=Note.objects.all(), required=False, allow_null=True
+    # )
+    notes = NoteSerializer(read_only=True, allow_null=True)
+    # images = serializers.PrimaryKeyRelatedField(
+    #     queryset=Image.objects.all(), required=False, allow_null=True
+    # )
+    images = ImageSerializer(read_only=True, allow_null=True)
 
     class Meta:
         model = Job

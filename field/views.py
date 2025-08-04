@@ -3,13 +3,15 @@ from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Job, Note, Image, Cost, Field
+from .models import Job, Note, Image, Cost, Field, Cultivation_calender, Product
 from .serializers import (
     JobSerializer,
     NoteSerializer,
     ImageSerializer,
     CostSerializer,
     FieldSerializer,
+    CultivationCalenderSerializer,
+    ProductSerializer,
 )
 from rest_framework.viewsets import ModelViewSet
 
@@ -96,6 +98,33 @@ class NoteDetails(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         # Ensure user can only access their own notes
         return Note.objects.filter(user=self.request.user)
+
+
+class cultivation_calender(generics.ListCreateAPIView):
+    serializer_class = CultivationCalenderSerializer
+    premission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Cultivation_calender.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+class ProductListCreate(generics.ListCreateAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Product.objects.all()
+
+
+class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Product.objects.filter()
 
 
 class JobListCreate(generics.ListCreateAPIView):
