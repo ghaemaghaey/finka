@@ -8,6 +8,7 @@ class Field(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     geography = models.JSONField(default=dict)
+    plantdate = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -70,7 +71,7 @@ class Job(models.Model):
     type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="Irrigating")
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
     made_date = models.DateTimeField(auto_now_add=True)
-    due_date = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateField()
     status = models.BooleanField()
     costs = models.ForeignKey(Cost, on_delete=models.SET_NULL, null=True, blank=True)
     notes = models.ForeignKey(Note, on_delete=models.SET_NULL, null=True, blank=True)
