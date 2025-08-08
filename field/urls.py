@@ -14,6 +14,8 @@ from .views import (
     ProductListCreate,
     ProductDetail,
 )
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 def register_crud_urls(prefix, list_view, detail_view):
@@ -32,7 +34,7 @@ urlpatterns += register_crud_urls("images", ImageListCreate, ImageDetail)
 urlpatterns += register_crud_urls("costs", CostListCreate, CostDetail)
 urlpatterns += register_crud_urls("fields", FieldListCreate, FieldDetail)
 urlpatterns += register_crud_urls("products", ProductListCreate, ProductDetail)
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns = [
 #     path("jobs/", JobListCreate.as_view(), name="job-createlist"),

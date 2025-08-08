@@ -23,6 +23,7 @@ class CostSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True)
     uploaded_at = serializers.SerializerMethodField()
 
     class Meta:
@@ -39,15 +40,15 @@ class JobSerializer(serializers.ModelSerializer):
     # costs = serializers.PrimaryKeyRelatedField(
     #     queryset=Cost.objects.all(), required=False, allow_null=True
     # )
-    costs = CostSerializer(read_only=True, allow_null=True)
+    costs = CostSerializer(read_only=True, many=True)
     # notes = serializers.PrimaryKeyRelatedField(
-    #     queryset=Note.objects.all(), required=False, allow_null=True
+    #     queryset=Note.objects.all(), required=False, many=True
     # )
-    notes = NoteSerializer(read_only=True, allow_null=True)
+    notes = NoteSerializer(read_only=True, many=True)
     # images = serializers.PrimaryKeyRelatedField(
-    #     queryset=Image.objects.all(), required=False, allow_null=True
+    #     queryset=Image.objects.all(), required=False, many=True
     # )
-    images = ImageSerializer(read_only=True, allow_null=True)
+    images = ImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = Job

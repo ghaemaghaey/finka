@@ -26,6 +26,7 @@ class Cost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     amount = models.BigIntegerField(default=0)
+    date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -71,13 +72,13 @@ class Job(models.Model):
     type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="Irrigating")
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
     made_date = models.DateTimeField(auto_now_add=True)
-    due_date = models.DateField()
+    date = models.DateField()
     status = models.BooleanField()
-    costs = models.ForeignKey(Cost, on_delete=models.SET_NULL, null=True, blank=True)
-    notes = models.ForeignKey(Note, on_delete=models.SET_NULL, null=True, blank=True)
+    costs = models.ManyToManyField(Cost, null=True, blank=True)
+    notes = models.ManyToManyField(Note, null=True, blank=True)
     ##########REMOVE THIS MF!
     # voices = models.ForeignKey(Voice, on_delete=models.SET_NULL, null=True, blank=True)
-    images = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True, blank=True)
+    images = models.ManyToManyField(Image, null=True, blank=True)
 
     def __str__(self):
         return self.type
