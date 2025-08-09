@@ -69,16 +69,16 @@ class Job(models.Model):
         ("Pruning", "PRUNING"),
         ("Harvesting", "HARVESTING"),
     ]
-    type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="Irrigating")
+    type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="Irrigation")
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
     made_date = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
-    status = models.BooleanField()
-    costs = models.ManyToManyField(Cost, null=True, blank=True)
-    notes = models.ManyToManyField(Note, null=True, blank=True)
+    status = models.BooleanField(default=False)
+    costs = models.ManyToManyField(Cost, blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
     ##########REMOVE THIS MF!
     # voices = models.ForeignKey(Voice, on_delete=models.SET_NULL, null=True, blank=True)
-    images = models.ManyToManyField(Image, null=True, blank=True)
+    images = models.ManyToManyField(Image, blank=True)
 
     def __str__(self):
         return self.type
