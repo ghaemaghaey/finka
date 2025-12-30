@@ -27,7 +27,8 @@ COPY . /app/
 
 # Expose the Django port
 EXPOSE 8000
-
-ENTRYPOINT [ "/Entrypoint.sh" ]
+COPY entrypoint.sh  /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 # Run Django’s development server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
