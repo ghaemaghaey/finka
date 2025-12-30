@@ -11,10 +11,21 @@ services:
       - postgres_data:/var/lib/postgresql/data
     env_file:
       - .env
-
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+  depends_on:
+  - django-web
   django-web:
     build: .
-    container_name: django-docker
+    container_name: django-web
     ports:
       - "8000:8000"
     depends_on:
@@ -34,3 +45,5 @@ services:
       - .env
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:

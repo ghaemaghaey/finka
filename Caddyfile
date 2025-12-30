@@ -1,0 +1,3 @@
+api.ghaemghh.ir{
+    reverse_proxy django-web:8000
+}

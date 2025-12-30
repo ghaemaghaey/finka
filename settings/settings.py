@@ -90,6 +90,10 @@ WSGI_APPLICATION = "settings.wsgi.application"
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
